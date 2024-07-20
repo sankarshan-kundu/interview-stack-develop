@@ -55,8 +55,30 @@ services:
     networks:
       - app_network
   
+  api.products:
+    image: api-products:latest
+    container_name: api-products
+    ports:
+      - 8000:8000
+    build:
+      context: ./api.products
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - mariadb
+    volumes:
+      - ./api.products:/usr/src/app
+    environment:
+      - MYSQL_USER=interviewer
+      - MYSQL_PASSWORD=changeme
+      - MYSQL_HOST=172.17.0.1
+      - MYSQL_PORT=3306
+    networks:
+      - app_network
+  
+
   mariadb:
-    image: mariadb:10.2
+    image: mariadb:10.4
     container_name: mariadb
     ports:
       - 3306:3306
