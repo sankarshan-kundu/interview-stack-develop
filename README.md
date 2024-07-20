@@ -6,8 +6,9 @@ The application is comprised of 4 parts
 
 1. webapp -> Frontend for the applicaiton (written in React and Typescript)
 2. api.orders -> Backend for the applicaiton (written in flask)
-3. nginx -> The proxy for the requests
-4. db -> mariadb
+3. api.products -> Backend for the products (written in Python and Django)
+4. nginx -> The proxy for the requests
+5. db -> mariadb
 
 ## Requirements
 
@@ -38,6 +39,17 @@ To build the docker image for api.orders run the command bellow from the root of
 ```Bash
 docker build -t api.orders:latest .
 ```
+
+### api.products
+
+To build the docker image for api.products run the command bellow from the root of the `api.products` directory
+
+```Bash
+docker build -t api.products:latest .
+```
+
+NOTE: Build will fail, if the unit tests failed
+
 
 ### Starting the application
 
@@ -86,6 +98,18 @@ python -m pytest tests/ # from within the container
 ```
 
 NOTE: Make sure the api.orders container is running.
+
+### Testing api.products
+
+To run the tests from the root directory run the following commands
+
+```Bash
+docker compose exec -it api-products bash
+python manage.py test # from within the container
+```
+
+NOTE: Make sure the api.products container is running.
+
 
 You can also install all the dependencies locally and run the tests using the same command that you run inside the docker container from the bakcend directory. Would recommend setting up a python env under the .venv directory name for this
 
